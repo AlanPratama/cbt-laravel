@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function LoginProcess(Request $req)
+    public function loginView()
+    {
+        return view('pages.auth.login');
+    }
+
+    public function loginProcess(Request $req)
     {
         $req->validate([
             'email' => 'required|email',
@@ -33,27 +38,54 @@ class AuthController extends Controller
         }
 
         return redirect('/')->with('success',  'BERHASIL LOGIN!');
-
     }
 
 
 
+
     // REGISTER
-    public function RegisterProcess(Request $req)
+    public function registerView()
+    {
+        return view('pages.auth.register');
+    }
+
+    public function registerProcess(Request $req)
     {
         $req->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'confirmPassword' => 'required|same:password',
         ]);
 
-        User::create([
-            'name' => $req->name,
-            'email' => $req->email,
-            'password' => bcrypt($req->password),
-            'role' => 'Member'
-        ]);
+        // User::create([
+        //     'name' => $req->name,
+        //     'proPic' => '/assets/image/noProPic.png',
+        //     'email' => $req->email,
+        //     'password' => bcrypt($req->password),
+        //     'role' => 'Member'
+        // ]);
 
-        return redirect()->back()->with('successRegist', 'REGISTER AKUN BERHASIL!');
+        $user = new User();
+        $user->name = $req->name;
+        $user->proPic = '/assets/image/noProPic.png';
+        $user->email = $req->email;
+        $user->password = bcrypt($req->password);
+        $user->role = 'Member';
+        $user->save();
+
+
+        return redirect()->back()->with('successRegister', 'REGISTER AKUN BERHASIL!');
+    }
+
+
+    public function logout(Request $req)
+    {
+        Auth::logout();
+
+        $req->session()->invalidate();
+        $req->session()->regenerateToken();
+
+        return redirect('/auth/login');
     }
 }

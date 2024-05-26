@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('questionId')->unique();
+            
             $table->date('startDate');
             $table->date('endDate');
 

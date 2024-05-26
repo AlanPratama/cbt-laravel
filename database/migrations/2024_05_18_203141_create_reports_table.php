@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('userId');
-            $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('userId');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('questionId');
 
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('incorrectAnswers');
             
             $table->integer('totalPoints');
+            $table->enum('status', ['Passed', 'Not Passed']);
 
 
             $table->timestamps();
