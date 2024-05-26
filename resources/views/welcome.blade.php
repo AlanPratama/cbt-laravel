@@ -74,7 +74,7 @@
         </ul>
       </nav>
 
-      <button class="btn btn-secondary">Get Started</button>
+      <a href="{{ url('/auth/login') }}"><button class="btn btn-secondary">Login Account</button></a>
 
       <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggle-btn>
         <ion-icon name="menu-outline" class="menu-icon"></ion-icon>

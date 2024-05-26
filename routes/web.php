@@ -12,12 +12,14 @@ Route::prefix('/auth')->controller(AuthController::class)->group(function() {
     Route::post('/register', 'registerProcess')->name('registerProcess');
 });
 
+Route::get('/', function () {
+    // dd(Auth::user());
+    return view('welcome');
+});
+
 
 Route::middleware('auth')->group(function() {
     Route::get('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/', function () {
-        // dd(Auth::user());
-        return view('welcome');
-    });
+    
 });
