@@ -12,6 +12,22 @@ Route::prefix('/auth')->controller(AuthController::class)->group(function() {
     Route::post('/register', 'registerProcess')->name('registerProcess');
 });
 
+Route::get('/profile/dashboard', function () {
+    return view('pages.member.dashboard');
+});
+
+Route::get('/profile/history', function () {
+    return view('pages.member.history');
+});
+
+Route::get('/register', function() {
+    return view('pages.auth.r');    
+});
+
+Route::get('/login', function() {
+    return view('pages.auth.l');    
+});
+
 Route::get('/', function () {
     // dd(Auth::user());
     return view('welcome');
